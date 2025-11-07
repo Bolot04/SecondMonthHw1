@@ -1,69 +1,110 @@
-import random
-import string
+# import random
+# import string
+#
+#
+#
+# class BankAccount:
+#     def __init__(self, name, balance, password):
+#         self.name = name                 # открытый
+#         self._balance = balance          # защищённый
+#         self.__password = password       # приватный
+#
+#     def deposit(self,amount ,password):
+#         if self.__password != password:
+#             return "Неверный пароль!"
+#         self._balance += amount
+#         return self._balance
+#
+#
+#     def withdraw(self,amount , password):
+#         if self.__password == password:
+#             amount = self._balance
+#             amount -= 100
+#             return f"Ваш новый баланс: {self._balance}"
+#         else:
+#             return "Неверный пароль"
+#
+#     def change_password(self,old_password, new_password):
+#         if old_password != self.__password:
+#             return "Пароль изменен"
+#         self.__password = new_password
+#         return "Пароль изменен"
+#
+#     def get_balance(self, password):
+#         if self.__password == password:
+#             return f"Ваш баланс {self._balance}"
+#         elif self.__password != password:
+#             return f"Ваш баланс {self._balance}"
+#         else:
+#             return "Неверный пароль!"
+#
+#     def reset_pin(self, password):
+#         if  password != self.__password:
+#             return "Неверный пароль!"
+#         new_pin = self.__generate_pin()
+#         self.__password = new_pin
+#         return f"Ваш новый PIN:{new_pin}"
+#
+#     def __generate_pin(self):
+#         return ''.join(str(random.randint(0,9))for _ in range(4))
+#
+# john = BankAccount("John", 100, "123qwerty")
+# print(john.deposit(50, "123qwerty"))
+# print(john.withdraw(200, "123qwerty"))
+# print(john.get_balance("123qwerty"))
+# print(john.change_password("wrong", "new"))
+# new_pin = john.reset_pin("123qwerty")
+# print(new_pin)
+# print(john.get_balance(new_pin))
+#
+
+from abc import ABC, abstractmethod
 
 
+class NotificationSender(ABC):
+    def __init__(self, service):
+        self._service = service
 
-class BankAccount:
-    def __init__(self, name, balance, password):
-        self.name = name                 # открытый
-        self._balance = balance          # защищённый
-        self.__password = password       # приватный
+    @abstractmethod
+    def send(self,recipient):
+        pass
 
-    def deposit(self,amount ,password):
-        if self.__password == password:
-            amount = self._balance
-            amount += 100
-            return f"Ваш баланс увеличен c {self._balance} на {amount}"
-        else:
-            return "Неверный пароль!"
+    def get_service(self):
+        return f"Сервис: {self._service}"
 
+class EmailSender(NotificationSender):
+    def __init__(self):
+        self._service = "Gmail"
 
-    def withdraw(self,amount , password):
-        if self.__password == password:
-            amount = self._balance
-            amount -= 100
-            return f"Ваш новый баланс: {self._balance}"
-        else:
-            return "Неверный пароль"
+    def send(self, recipient):
+        return f"Email sent to {recipient}"
 
-    def change_password(self,old_password, new_password):
-        if old_password == self.__password:
-            self.__password == new_password
-            return "Пароль изменен"
-        else:
-            return "Старый пароль неверный"
+class SmsSender(NotificationSender):
+    def __init__(self):
+        self._service = "Twilio"
 
-    def get_balance(self, password):
-        if self.__password == password:
-            return f"Ваш баланс {self._balance}"
-        else:
-            return "Неверный пароль!"
+    def send(self, recipient):
+        return f"SMS sent to {recipient}"
 
-    def __generate_pin(self):
-            first_digit = random.choice(string.digits[1:])
-            other_digits = ''.join(random.choice(string.digits) for _ in range(3))
-            return first_digit + other_digits
+class PushSender(NotificationSender):
+    def __init__(self):
+        self._service = "Firebase"
 
-    def reset_pin(self, password):
-        if self.__password == password:
-            new_pin = self.__generate_pin()
-            self.__password == new_pin
-            return f"Ваш новый PIN:{new_pin}"
-        else:
-            return "Неверный пароль"
+    def send(self, recipient):
+        return f"Push sento to {recipient}"
 
-    def show_balance(self, password):
-        if self.__password == password:
-            return f"Ваш баланс: {self._balance}₽"
-        else:
-            return "Неверный пароль"
+if __name__ == "__main__":
+    email = EmailSender()
+    sms = SmsSender()
+    push = PushSender()
 
+    print(email.send("Привет", "john@mail.ru"))
+    print(email.get_service())
 
-john = BankAccount("John", 100, "123456")
-print(john.deposit(100, "123456"))
-print(john.withdraw(100, "123456"))
-print(john.change_password("123456", "654321"))
-print(john.reset_pin("123456"))
-print(john.get_balanc)
+    print(sms.send("+996778228900"))
+    print(sms.get_service())
+
+    print(push.send("John"))
+    print(push.get_service())
 
 
