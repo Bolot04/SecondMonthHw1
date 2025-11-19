@@ -1,8 +1,8 @@
 """Импорт и настройка:"""
-# from faker import Faker
+from faker import Faker
 
 """Указываем локлизацию"""
-# fake = Faker("ru_RU")
+fake = Faker("ru_RU")
 
 
 """Генерация нескольких записей"""
@@ -17,24 +17,24 @@
 #     })
 
 """Улучшенный вывод ткрминала"""
-# for _ in range(5):
-#     person = ({
-#         "name": fake.name(),
-#         "email":fake.email(),
-#         "address":fake.address().replace("\n",","),
-#         "lat": float(fake.latitude()),
-#         "lon": float(fake.longitude()),
-#         "website": fake.url()
-#     })
-#
-#     print("────────────────────────────────────────")
-#     print(f"Имя:     {person['name']}")
-#     print(f"Email:   {person['email']}")
-#     print(f"Адрес:   {person['address']}")
-#     print(f"Широта:  {person['lat']}")
-#     print(f"Долгота: {person['lon']}")
-#     print(f"Сайт:    {person['website']}")
-#     print("────────────────────────────────────────\n")
+for _ in range(5):
+    person = ({
+        "name": fake.name(),
+        "email":fake.email(),
+        "address":fake.address().replace("\n",","),
+        "lat": float(fake.latitude()),
+        "lon": float(fake.longitude()),
+        "website": fake.url()
+    })
+
+    print("────────────────────────────────────────")
+    print(f"Имя:     {person['name']}")
+    print(f"Email:   {person['email']}")
+    print(f"Адрес:   {person['address']}")
+    print(f"Широта:  {person['lat']}")
+    print(f"Долгота: {person['lon']}")
+    print(f"Сайт:    {person['website']}")
+    print("────────────────────────────────────────\n")
 
 
 
@@ -49,17 +49,17 @@
 
 
 """Доп задание"""
-#brute force
-def two_sum(nums, target):
-    for i in range(len(nums)):
-        for j in range(i + 1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
-
-nums = [2, 7, 9, 15, 22, 66]
-
-target = 17
-
-result = two_sum(nums, target)
-print(result)
+# #brute force
+# def two_sum(nums, target):
+#     for i in range(len(nums)):
+#         for j in range(i + 1, len(nums)):
+#             if nums[i] + nums[j] == target:
+#                 return [i, j]
+#
+# nums = [2, 7, 9, 15, 22, 66]
+#
+# target = 17
+#
+# result = two_sum(nums, target)
+# print(result)
 
